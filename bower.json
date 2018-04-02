@@ -1,5 +1,5 @@
 {
-  "name": "polymer-starter-kit",
+  "name": "portfolio-web",
   "authors": [
     "The Polymer Authors"
   ],
@@ -12,15 +12,35 @@
     "iron-media-query": "PolymerElements/iron-media-query#^2.0.0",
     "iron-pages": "PolymerElements/iron-pages#^2.0.0",
     "iron-selector": "PolymerElements/iron-selector#^2.0.0",
+    "iron-image": "PolymerElements/iron-image#^2.0.0",
     "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
-    "polymer": "Polymer/polymer#^2.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+    "polymer": "Polymer/polymer#^2.1.1",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "google-apis": "GoogleWebComponents/google-apis#1 - 2",
+    "iron-localstorage": "PolymerElements/iron-localstorage#1 - 2",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.1.1",
+    "google-youtube": "GoogleWebComponents/google-youtube#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^6.0.0"
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#1 - 2"
   },
-  "private": true
+  "private": true,
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "Polymer/polymer#^1.0.0",
+        "google-apis": "GoogleWebComponents/google-apis#^1.0.0",
+        "iron-localstorage": "PolymerElements/iron-localstorage#^1.0.0"
+      },
+      "devDependencies": {
+        "web-component-tester": "^4.0.0",
+        "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+        "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.0"
+      }
+    }
+  }
 }
