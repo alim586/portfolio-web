@@ -14,10 +14,9 @@
 
         <div>
             <google-youtube id="googleYouTube"
-                            height="270px"
-                            width="480px"
+                            width="100%"
                             playsupported="{{playSupported}}"
-                            video-id="y8QLZN3L7wI"
+                            video-id="[[videoId]]"
                             state="{{state}}"
                             currenttime="{{currentTime}}"
                             currenttimeformatted="{{currentTimeFormatted}}"
@@ -30,11 +29,11 @@
                             on-google-youtube-state-change="handleStateChange"
                             on-google-youtube-error="handleYouTubeError">
             </google-youtube>
-            <paper-button dialog-dismiss on-click="handlePauseVideo">X</paper-button>
-            <paper-button id="play" disabled="{{computePlayDisabled(state, playSupported)}}" on-click="handlePlayVideo">
+            <!-- <paper-button dialog-dismiss on-click="handlePauseVideo">X</paper-button> -->
+            <!-- <paper-button id="play" disabled="{{computePlayDisabled(state, playSupported)}}" on-click="handlePlayVideo">
                 play
             </paper-button>
-            <paper-button id="pause" disabled="{{computePauseDisabled(state)}}" on-click="handlePauseVideo">pause</paper-button>
+            <paper-button id="pause" disabled="{{computePauseDisabled(state)}}" on-click="handlePauseVideo">pause</paper-button> -->
         </div>
 
         <!--<div>-->
@@ -104,10 +103,11 @@
                     volume: Number,
                     playbackRate: Number,
                     playbackQuality: String,
+                    videoId: String,
                     events: {
                         type: Array,
                         value: [],
-                    },
+                    }
                 };
             }
 

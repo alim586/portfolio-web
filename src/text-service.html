@@ -1,0 +1,60 @@
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="text-service">
+  <template>
+    <iron-ajax
+    auto
+    headers='{"Accept": "*/*"}'
+    handle-as="json"
+    url="{{requestUrl}}"
+    handle-as="json"
+    on-response="_handleResponse"
+    on-error="_handleError"></iron-ajax>
+
+  </template>
+</template>
+  <script>
+    class TextService extends Polymer.Element {
+      static get is(){
+        return 'text-service';
+      }
+
+      static get properties(){
+        return {
+          resourceId:{
+            type: String,
+            value: ""
+          },
+          serviceUrl:{
+            type: String,
+            value: "http://localhost:8080"
+          },
+          requestUrl:{
+            type: String,
+            computed: '_join(serviceUrl, resource)'
+          },
+          response:{
+            type: JSON,
+            notify: true,
+            readOnly: true
+          }
+        }
+      }
+
+      _handleResponse(e, detail){
+         this._setResponse(detail.response);
+      }
+
+      _handleError(e, detail){
+         this._setResponse({"title":"empty","text":"empty","id":"empty"});
+      }
+
+      _join(serviceUrl, resourceId){
+        return [serviceUrl, resourceId].join("/");
+      }
+    }
+    customElements.define(TextService.is, TextService)
+  </script>
+</dom-module>

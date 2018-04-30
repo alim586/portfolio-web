@@ -12,60 +12,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-
-
+<linf rel="import" href="../bower_components/paper-datatable/paper-datatable.html">
+<linf rel="import" href="../bower_components/paper-datatable/paper-datatable-column.html">
 <link rel="import" href="youtube.html">
-
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="text-service.html">
 
-<dom-module id="about-me">
-    <template>
-        <style include="shared-styles">
+    <dom-module id="about-me">
+      <template>
+      <style include="shared-styles">
             :host {
                 display: block;
                 padding: 10px;
-
             }
-        </style>
-
-        <div class="card">
-            <div>
-                <iron-image src="http://lorempixel.com/400/400"></iron-image>
-            </div>
-            <h1>About Me</h1>
-            <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-            <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit
-                amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo
-                eripuit sit.</p>
-
-            <paper-button on-click=_openDialog>modal dialog</paper-button>
-            <paper-dialog alwaysOnTop="true" id="modal">
-                <youtube-element></youtube-element>
-            </paper-dialog>
-
-        </div>
-
-
-    </template>
-
-    <script>
+      </style>
+      <div class="card">
+          <h1>{{response.title}}</h1>
+          <p>{{response.text}}</p>
+          <p><text-service id="textservice" response="{{response}}"></text-service></p>
+          <image class="image" src="../images/picard-and-dathon.jpg"></image>
+          <youtube-element video-id='QoM_kPGfkw0'></youtube-element></span>
+      </div>
+      </template>
+      <script>
         class About extends Polymer.Element {
-            static get is() {
-                return 'about-me';
+          static get is() {
+            return 'about-me';
+          }
+          static get properties(){
+            return{
+              response:{
+                type: JSON,
+              }
             }
-
-            _openDialog(e) {
-                this.$.modal.open();
-                if (e.target.withBackdrop) {
-                    e.target.parentNode.insertBefore(e.target._backdrop, e.target);
-                }
-            }
-
-            _patchOverlay(e) {
-                console.log("patchOverlay");
-            }
+          }
         }
 
         customElements.define(About.is, About);
-    </script>
-</dom-module>
+
+      </script>
+    </dom-module>
