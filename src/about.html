@@ -27,9 +27,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
       </style>
       <div class="card">
-          <h1>{{response.title}}</h1>
-          <p>{{response.text}}</p>
-          <p><text-service id="textservice" response="{{response}}"></text-service></p>
+          <h1>{{pageContent.title}}</h1>
+          <p>{{pageContent.text}}</p>
+          <text-service resource-path="item/1" page-content="{{pageContent}}"></text-service>
           <image class="image" src="../images/picard-and-dathon.jpg"></image>
           <youtube-element video-id='QoM_kPGfkw0'></youtube-element></span>
       </div>
@@ -41,9 +41,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
           static get properties(){
             return{
-              response:{
-                type: JSON,
-              }
+              pageContent:{
+                type: Object
+              },
             }
           }
         }

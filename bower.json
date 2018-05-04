@@ -7,7 +7,7 @@
   "dependencies": {
     "app-layout": "PolymerElements/app-layout#^2.0.0",
     "app-route": "PolymerElements/app-route#^2.0.0",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
+    "iron-flex-layout": "^2.0.3",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.0",
     "iron-media-query": "PolymerElements/iron-media-query#^2.0.0",
     "iron-pages": "PolymerElements/iron-pages#^2.0.0",
@@ -21,7 +21,8 @@
     "paper-dialog": "PolymerElements/paper-dialog#^2.1.1",
     "google-youtube": "GoogleWebComponents/google-youtube#^2.0.0",
     "paper-datatable": "^0.9.8",
-    "iron-ajax": "Polymerelements/iron-ajax#^2.1.3"
+    "iron-ajax": "Polymerelements/iron-ajax#^2.1.3",
+    "paper-styles": "^2.1.0"
   },
   "resolutions": {
     "polymer": "^2.0.0",

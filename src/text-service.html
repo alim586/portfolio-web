@@ -11,8 +11,8 @@
     url="{{requestUrl}}"
     handle-as="json"
     on-response="_handleResponse"
-    on-error="_handleError"></iron-ajax>
-
+    on-error="_handleError">
+  </iron-ajax>
   </template>
 </template>
   <script>
@@ -23,9 +23,8 @@
 
       static get properties(){
         return {
-          resourceId:{
+          resourcePath:{
             type: String,
-            value: ""
           },
           serviceUrl:{
             type: String,
@@ -33,26 +32,26 @@
           },
           requestUrl:{
             type: String,
-            computed: '_join(serviceUrl, resource)'
+            computed: '_join(serviceUrl, resourcePath)'
           },
-          response:{
-            type: JSON,
+          pageContent:{
+            type: Object,
             notify: true,
             readOnly: true
-          }
+          },
         }
       }
 
       _handleResponse(e, detail){
-         this._setResponse(detail.response);
+         this._setPageContent(detail.response);
       }
 
       _handleError(e, detail){
-         this._setResponse({"title":"empty","text":"empty","id":"empty"});
+         this._setPageContent({"title":"empty","text":"empty","id":"empty"});
       }
 
-      _join(serviceUrl, resourceId){
-        return [serviceUrl, resourceId].join("/");
+      _join(serviceUrl, resourcePath){
+        return [serviceUrl, resourcePath].join("/");
       }
     }
     customElements.define(TextService.is, TextService)
