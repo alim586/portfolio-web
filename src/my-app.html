@@ -30,17 +30,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        --app-primary-color: #f4964b;
+        --app-primary-color: #3567;
         /*--app-secondary-color: black;*/
 
 
         display: block;
       }
 
-      app-drawer-layout:-webkit-full-screen-ancestor app-header,
+      /* app-drawer-layout:-webkit-full-screen-ancestor app-header,
       app-drawer-layout:-webkit-full-screen-ancestor app-drawer {
         z-index: -1 !important;
-      }
+      } */
 
       app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
@@ -96,16 +96,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+      <app-header-layout id="layout">
 
-        <app-header slot="header" condenses reveals effects="waterfall">
+        <app-header slot="header" condenses reveals effects="waterfall" id="header">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>Some web page</div>
-            <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-              <a name="about" href="[[rootPath]]about">About</a>
-              <a name="fac" href="[[rootPath]]faq">Faq</a>
-            </iron-selector>
           </app-toolbar>
         </app-header>
 
@@ -113,12 +109,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             selected="[[page]]"
             attr-for-selected="name"
             fallback-selection="view404"
-            role="main">
-          <about-me name="about"></about-me>
+            role="main"
+            on-iron-deselect="_previousSelectedPage">
+          <about-me name="about" scroll-target="[[scrollTarget]]"></about-me>
           <faq-element name="faq"></faq-element>
           <subscribe-element name="subscribe"></subscribe-element>
           <view-404 name="view404"></view-404>
         </iron-pages>
+        <footer>footer</footer>
       </app-header-layout>
     </app-drawer-layout>
   </template>
@@ -133,16 +131,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          page: {
-            type: String,
-            reflectToAttribute: true,
-            observer: '_pageChanged',
+          page:{
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
           },
           routeData: Object,
           subroute: Object,
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
+          scrollTarget: HTMLElement,
         };
       }
 
@@ -152,10 +151,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ];
       }
 
+      ready() {
+        super.ready();
+        this.addEventListener( 'about-me-video-playing', this._aboutMeVideoIsPlaying() );
+        this.scrollTarget = this.$.header.scrollTarget;
+      }
+      _aboutMeVideoIsPlaying(e){
+        console.log("_aboutMeVideoIsPlaying");
+      }
+
       _routePageChanged(page) {
         // If no page was found in the route data, page will be an empty string.
         // Default to 'view1' in that case.
-        this.page = page || 'about';
+        this.page = page || 'about'
 
         // Close a non-persistent drawer when the page & route are changed.
         if (!this.$.drawer.persistent ) {
@@ -175,6 +183,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showPage404() {
         this.page = 'view404';
+      }
+
+      _previousSelectedPage(e, element){
+        const item = element.item
+        if(item.nodeName == "ABOUT-ME"){
+          item._pause(e);
+        }
       }
     }
 

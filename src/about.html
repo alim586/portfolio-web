@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <linf rel="import" href="../bower_components/paper-datatable/paper-datatable.html">
 <linf rel="import" href="../bower_components/paper-datatable/paper-datatable-column.html">
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="youtube.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="text-service.html">
@@ -24,15 +25,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             :host {
                 display: block;
                 padding: 10px;
+                height: 100%;
             }
+
       </style>
-      <div class="card">
-          <h1>{{pageContent.title}}</h1>
-          <p>{{pageContent.text}}</p>
-          <text-service resource-path="item/1" page-content="{{pageContent}}"></text-service>
-          <image class="image" src="../images/picard-and-dathon.jpg"></image>
-          <youtube-element video-id='QoM_kPGfkw0'></youtube-element></span>
-      </div>
+        <div class="card">
+            <h1>{{pageContent.title}}</h1>
+            <p>{{pageContent.text}}</p>
+            <youtube-element id="video" video-id='QoM_kPGfkw0'></youtube-element>
+            <text-service  resource-path="item/1" page-content="{{pageContent}}"></text-service>
+            <image class="image" src="../images/picard-and-dathon.jpg"></image>
+        </div>
+
+      <iron-scroll-threshold
+        id="scrollThreshold"
+        lower-threshold="1"
+        on-lower-threshold="_play">
+      </iron-scroll-threshold>
+
       </template>
       <script>
         class About extends Polymer.Element {
@@ -44,7 +54,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               pageContent:{
                 type: Object
               },
+              scrollTarget: HTMLElement,
             }
+          }
+          ready(){
+            super.ready();
+            this.$.scrollThreshold.scrollTarget = this.scrollTarget;
+            this.addEventListener('selected-changed', this._pause)
+          }
+
+          _play(e){
+              this.$.video.handlePlayVideo(e);
+              this.$.scrollThreshold.clearTriggers();
+              this.dispatchEvent(new CustomEvent('about-me-video-playing', {playing: true}));
+          }
+          _pause(e){
+            this.$.video.handlePauseVideo(e);
           }
         }
 
